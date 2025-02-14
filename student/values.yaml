@@ -1,0 +1,24 @@
+# Application Configuration
+studentapp:
+  replicaCount: 3
+  image:
+    repository: harbor.testcgit.xyz/testimagerepo/pythonapp
+    tag: v1
+    pullPolicy: Always
+  imagePullSecrets:
+    - name: harbor-secret
+  service:
+    type: LoadBalancer
+    port: 5000
+
+# Database Configuration
+postgres:
+  image: postgres
+  replicaCount: 1
+  password: "postgres"
+  database: "student"
+  storage:
+    size: 1Gi
+    storageClassName: ""
+  service:
+    port: 5432

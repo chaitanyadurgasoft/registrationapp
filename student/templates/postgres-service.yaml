@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-postgres
+  labels:
+    app: dev-postgres
+spec:
+  ports:
+    - port: {{ .Values.postgres.service.port }}
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    app: dev-postgres

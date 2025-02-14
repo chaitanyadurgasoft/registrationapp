@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-postgres
+  labels:
+    app: dev-postgres
+spec:
+  replicas: {{ .Values.postgres.replicaCount }}
+  selector:
+    matchLabels:
+      app: dev-postgres
+  template:
+    metadata:
+      labels:
+        app: dev-postgres
+    spec:
+      containers:
+      - name: postgres
+        image: "{{ .Values.postgres.image }}"
+        env:
+        - name: POSTGRES_PASSWORD
+          value: "{{ .Values.postgres.password }}"
+        - name: POSTGRES_DB
+          value: "{{ .Values.postgres.database }}"
+        - name: PGDATA  
+          value: "/var/lib/postgresql/data/pgdata"
+        volumeMounts:
+        - name: datastore
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: datastore
+        persistentVolumeClaim:
+          claimName: dbvol-claim

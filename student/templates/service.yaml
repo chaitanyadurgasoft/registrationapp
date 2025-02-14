@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-studentapp
+  labels:
+    app: studentapp
+spec:
+  type: {{ .Values.studentapp.service.type }}
+  ports:
+    - port: {{ .Values.studentapp.service.port }}
+      protocol: TCP
+      targetPort: 5000
+  selector:
+    app: studentapp

@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-studentapp
+  labels:
+    app: studentapp
+spec:
+  replicas: {{ .Values.studentapp.replicaCount }}
+  selector:
+    matchLabels:
+      app: studentapp
+  template:
+    metadata:
+      labels:
+        app: studentapp
+    spec:
+      imagePullSecrets:
+      {{- toYaml .Values.studentapp.imagePullSecrets | nindent 6 }}
+      containers:
+      - name: pythonapp
+        image: "{{ .Values.studentapp.image.repository }}:{{ .Values.studentapp.image.tag }}"
+        imagePullPolicy: {{ .Values.studentapp.image.pullPolicy }}
