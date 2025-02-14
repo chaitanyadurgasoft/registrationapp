@@ -3,7 +3,7 @@ studentapp:
   replicaCount: 3
   image:
     repository: harbor.testcgit.xyz/testimagerepo/pythonapp
-    tag: v1
+    tag: v2
     pullPolicy: Always
   imagePullSecrets:
     - name: harbor-secret
